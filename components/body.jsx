@@ -7,12 +7,12 @@ const Body = ({ urls }) => {
                         <tr key={url.code}> 
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    <a  href={url.code} target="_blank">{url.code}</a>
+                                    <a rel="noreferrer"  href={url.code} target="_blank">{url.code}</a>
                                 </p>
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    <a  href={url.url} target="_blank">{url.url}</a>
+                                    <a  rel="noreferrer" href={url.url} target="_blank">{url.url}</a>
                                 </p>
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
