@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        BigInt   @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String?
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  Token     Token[]
+  URL       URL[]
+  @@map("users")
+}
+
+model Token {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id]) 
+  userId    BigInt   @map(name: "user_id")
+  revoke    Boolean  @default(false)
+  expireAt  DateTime @map(name: "expire_at")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  @@map("tokens")
+}
+
+
+model URL {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id]) 
+  userId    BigInt?  @map(name: "user_id")
+  clicks    BigInt?  @map(name: "clicks")
+  url       String  
+  code      String   @unique
+  revoke    Boolean  @default(false) 
+  expireAt  DateTime @map(name: "expire_at")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  @@map("urls")
+}

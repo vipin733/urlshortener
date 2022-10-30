@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+    urlshortener:
+      container_name: urlshortener
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      ports:
+        - ${PORT}:${PORT}
+      volumes:
+        - ./:/src/client/urlshortener
+        - /src/client/urlshortener/node_modules
+      working_dir: /src/client/urlshortener
+      env_file:
+        - ./.env
+      depends_on:
+        - urlshortenerdb
+        
+    urlshortenerdb:
+      image: postgres:13-alpine
+      restart: always
+      env_file:
+        - ./.env
+      environment:
+        HOST: 0.0.0.0
+      ports:
+        - ${POSTGRES_PORT}:5432
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
