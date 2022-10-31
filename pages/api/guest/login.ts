@@ -3,13 +3,14 @@ import { setCookie } from 'cookies-next';
 import prisma from '../../../lib/prisma';
 import { messages } from '../../../lib/enums';
 import { checkHashPasword } from '../../../lib/helper';
+import { LoginValidator } from '../../../validator';
 const jwt = require("jsonwebtoken")
 
 const Index = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
 
         const { JWT_SECRET } = process.env
-        let {email, password} = req.body
+        let {email = "", password = ""} = req.body
         
         const userDb = await prisma.user.findUnique({
             where: {
@@ -46,4 +47,5 @@ const Index = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
-export default Index
+
+export default LoginValidator(Index)

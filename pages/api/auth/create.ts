@@ -34,7 +34,7 @@ const Index = async (req: NextApiRequestWithUser, res: NextApiResponse<any>) => 
         }
         return res.status(200).json({url})
     } catch (error) {
-       return res.status(500).json({ message: messages.serverError})
+       return res.status(500).json({ errors: {url: messages.serverError}})
     }
 }
 
